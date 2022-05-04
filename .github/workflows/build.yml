@@ -17,4 +17,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: yanic
-          path: yanic/yanic_*.deb
+          path: out/yanic_*.deb

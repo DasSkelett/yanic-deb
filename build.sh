@@ -7,6 +7,8 @@ set -ex
 # Prepare directories
 test -d yanic && rm -r yanic
 mkdir yanic
+test -d out && rm -r out
+mkdir out
 
 pushd yanic
 
@@ -37,4 +39,4 @@ popd
 
 # Build deb
 
-dpkg-deb --build yanic yanic
+dpkg-deb --build yanic out
