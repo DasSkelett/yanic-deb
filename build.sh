@@ -21,7 +21,8 @@ Version: $VERSION
 Section: custom
 Priority: optional
 Architecture: amd64
-Maintainer: Annika Wickert <aw@awlnx.space>
+Maintainer: DasSkelett <dasskelett@dasskelett.dev>
+Homepage: https://github.com/FreifunkBremen/yanic
 Description: Yanic package
  yanic is a respondd client that fetches, stores and publishes information about a Freifunk network. The goals:
  https://github.com/FreifunkBremen/yanic
