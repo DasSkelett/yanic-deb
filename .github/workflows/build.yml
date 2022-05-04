@@ -7,7 +7,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     container:
-      image: go:latest
+      image: golang:buster
 
     steps:
       - uses: actions/checkout@v3
