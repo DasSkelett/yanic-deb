@@ -4,12 +4,16 @@ VERSION=1.2.1
 
 set -ex
 
+# Prepare directories
+test -d yanic && rm -r yanic
+mkdir yanic
+
 pushd yanic
 
-# Prepare directories
-test -d usr/local/bin && rm -r usr/local/bin
 mkdir -p usr/local/bin
 mkdir -p DEBIAN
+
+# control file
 
 cat > DEBIAN/control <<EOF
 Package: yanic
@@ -23,9 +27,13 @@ Description: Yanic package
  https://github.com/FreifunkBremen/yanic
 EOF
 
+# Build binary
+
 GOBIN=`pwd`/usr/local/bin CGO_ENABLED=0 \
 go install -trimpath -buildvcs=false github.com/FreifunkBremen/yanic@v$VERSION
 
 popd
+
+# Build deb
 
 dpkg-deb --build yanic yanic
