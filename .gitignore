@@ -1,2 +1,4 @@
-/yanic/
-/out/
+/pkg/
+/src/
+/yanic-*
+/yanic_*

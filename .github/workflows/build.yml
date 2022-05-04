@@ -11,10 +11,26 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+      - name: Install makedeb
+        run: |
+          wget -qO - "https://proget.hunterwittenborn.com/debian-feeds/makedeb.pub" | \
+            gpg --dearmor | \
+            tee /usr/share/keyrings/makedeb-archive-keyring.gpg 1> /dev/null
+          echo "deb [signed-by=/usr/share/keyrings/makedeb-archive-keyring.gpg arch=all] https://proget.hunterwittenborn.com/ makedeb main" | \
+            tee /etc/apt/sources.list.d/makedeb.list
+          apt update
+          apt install -y makedeb sudo
+          # Setup makedeb user
+          useradd -m makedeb
+          echo 'makedeb ALL=(ALL:ALL) NOPASSWD:ALL' >> /etc/sudoers
       - name: Build deb
-        run: ./build.sh
+        run: |
+          chown -R makedeb:makedeb .
+          su makedeb <<EOF
+            makedeb --no-confirm --no-deps
+          EOF
       - name: Upload deb artifact
         uses: actions/upload-artifact@v3
         with:
           name: yanic
-          path: out/yanic_*.deb
+          path: yanic_*.deb
