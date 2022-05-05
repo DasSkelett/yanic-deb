@@ -1,0 +1,15 @@
+generated-by = makedeb
+pkgname = yanic
+pkgbase = yanic
+pkgdesc = A respondd client that fetches, stores and publishes information about a Freifunk network
+pkgrel = 1
+pkgver = 1.2.1
+url = https://github.com/FreifunkBremen/yanic
+arch = amd64
+arch = arm64
+backup = /etc/yanic.conf
+license = AGPL-3.0
+makedepends = golang
+source = yanic-1.2.1::https://github.com/FreifunkBremen/yanic/archive/refs/tags/v1.2.1.tar.gz
+sha256sums = eb677f911cfa60f49d255a8f795ea84955fc1390d365b291457bdfa5e2491c82
+makedepends = golang
