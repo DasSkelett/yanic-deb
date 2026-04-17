@@ -31,5 +31,5 @@ jobs:
       - name: Upload deb artifact
         uses: actions/upload-artifact@v7
         with:
-          name: yanic
+          archive: false
           path: yanic_*.deb
