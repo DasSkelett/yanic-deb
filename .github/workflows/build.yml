@@ -10,27 +10,26 @@ jobs:
       image: golang:bookworm
 
     steps:
-      - uses: actions/checkout@v4
-      - name: Install makedeb
+      - uses: actions/checkout@v6
+      - name: Prepare makedeb
         run: |
-          wget -qO - "https://proget.hunterwittenborn.com/debian-feeds/makedeb.pub" | \
-            gpg --dearmor | \
-            tee /usr/share/keyrings/makedeb-archive-keyring.gpg 1> /dev/null
-          echo "deb [signed-by=/usr/share/keyrings/makedeb-archive-keyring.gpg arch=all] https://proget.hunterwittenborn.com/ makedeb main" | \
-            tee /etc/apt/sources.list.d/makedeb.list
           apt update
-          apt install -y makedeb sudo
+          apt install sudo
           # Setup makedeb user
           useradd -m makedeb
           echo 'makedeb ALL=(ALL:ALL) NOPASSWD:ALL' >> /etc/sudoers
+          chown -R makedeb:makedeb .
+      - name: Install makedeb
+        run: |
+          wget https://github.com/makedeb/makedeb/releases/download/v16.1.0-beta1/makedeb-beta_16.1.0-beta1_amd64_jammy.deb
+          dpkg -i makedeb-beta_16.1.0-beta1_amd64_jammy.deb || apt --fix-broken install -y
       - name: Build deb
         run: |
-          chown -R makedeb:makedeb .
           su makedeb <<EOF
             makedeb --no-confirm --no-deps
           EOF
       - name: Upload deb artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
-          name: yanic
+          archive: false
           path: yanic_*.deb
