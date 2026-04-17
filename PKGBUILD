@@ -13,12 +13,12 @@ source=("${pkgname}-${pkgver}::https://github.com/freifunkMUC/yanic/archive/refs
 sha256sums=('87250c373370dd1d1cb974881b67eeb154cadfeead14303944d29fa00d19a305')
 
 build() {
-    cd "${pkgname}-${pkgver}/"
+    cd "${pkgname}-${pkgver//+/-}/"
     go build -trimpath -buildvcs=false -o "${pkgname}"
 }
 
 package() {
-    cd "${pkgname}-${pkgver}/"
+    cd "${pkgname}-${pkgver//+/-}/"
     install -Dm755 "${pkgname}" "${pkgdir}/usr/local/bin/${pkgname}"
     install -Dm644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
     install -Dm644 config_example.toml "${pkgdir}/etc/${pkgname}.conf"
